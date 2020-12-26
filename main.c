@@ -10,7 +10,7 @@ struct ids_rule
 	char direction[3];
 	char address_destination[IP_ADDR_LEN_STR];
 	int port_destination;
-	char options[150];
+	char options[4][20];
 	
 } typedef Rule;
 
@@ -49,8 +49,21 @@ void read_rules(FILE* file, Rule* rules_ds, int count)
 		token = strtok(NULL, " ");
 		rules_ds[ind].port_destination = atoi(token);
 
-		token = strtok(NULL, " ");
-		strcpy(rules_ds[ind].options, token);
+		token = strtok(NULL, "(");
+
+		int ind2 = 0;
+		while(strcmp(token, ")") != 0)
+		{
+			token = strtok(NULL, ":");
+			strcpy(rules_ds[ind].options[ind2], token);
+
+			token = strtok(NULL, "\"");
+
+			token = strtok(NULL, "\"");
+			strcpy(rules_ds[ind].options[ind2+1], token);
+
+			ind2+=2;
+		}
 
 		ind++;
 	}
