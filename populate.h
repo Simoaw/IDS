@@ -106,6 +106,7 @@ struct custom_ethernet
         char destination_mac[ETHER_ADDR_LEN_STR];
         int ethernet_type;
         int frame_size;
+	char protocol[5]; //ajout
         IP_Packet data;
 
 } typedef ETHER_Frame;
