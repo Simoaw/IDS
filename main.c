@@ -56,7 +56,6 @@ void rule_matcher(Rule* rules_ds, ETHER_Frame* frame)
 								}
 								else if(strstr((char*)frame->data.data.data, rules_ds[i].idso.type2) != 0)
 								{
-								//if(strstr(frame->data.data.data, rules_ds[i].idso.type2) != 0)
 														
 									printf("Le paquet enfreint une regle\n");
 									
@@ -79,7 +78,7 @@ void rule_matcher(Rule* rules_ds, ETHER_Frame* frame)
 	}
 }
 
-void read_rules(FILE* file, Rule* rules_ds, int count)
+void read_rules(FILE* file, Rule* rules_ds)
 {
 	//credits : cours
 	char line[200];
@@ -182,7 +181,8 @@ int main(int argc, char* argv[])
 	
 	//printf("pre_read_rules\n");
 
-	read_rules(file, rules_ds, count);
+	read_rules(file, rules_ds);
+	fclose(file);
 	
 	//printf("post_read_rules\n");
 
@@ -194,6 +194,7 @@ int main(int argc, char* argv[])
         handle = pcap_create(device,error_buffer);
         pcap_set_timeout(handle, 10);
         pcap_activate(handle);
+        
         int total_packet_count = 0;
 
 	//loop de l'ecoute des paquets
