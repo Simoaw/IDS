@@ -5,9 +5,9 @@
 struct options_rule
 {
 	char type1[10];
-	char msg1[30];
+	char msg1[50];
 	char type2[10];
-	char msg2[30];
+	char msg2[50];
 
 } typedef Options;
 
