@@ -35,10 +35,12 @@ void rule_matcher(Rule* rules_ds, ETHER_Frame* frame)
 			{
 				if(strcmp(rules_ds[i].direction,"->") == 0)
 				{
+					printf("rule:%s frame:%s\n", rules_ds[i].address_destination, frame->data.destination_ip);
 					if(strcmp(rules_ds[i].address_destination,"any") == 0||strcmp(rules_ds[i].address_destination,frame->data.destination_ip) == 0)
 					{
 						if(rules_ds[i].port_destination == 0||rules_ds[i].port_destination == frame->data.data.destination_port)
 						{
+							//printf("%s %s\n",rules_ds[i].protocol, frame->protocol);
 							if(strcmp(rules_ds[i].protocol, frame->protocol) == 0)
 							{
 								if(strcmp(rules_ds[i].idso.type2, "NULL") == 0)
@@ -116,10 +118,8 @@ void read_rules(FILE* file, Rule* rules_ds, int count)
 		strcpy(rules_ds[ind].idso.msg1, opt);
 		
 		strcpy(opt, strtok(NULL, ";"));
-		
-		//printf("%s\n", rules_ds[ind].idso.msg1);
-		
-		//printf("%s \n", opt);
+
+		//printf("%s\n", rules_ds[ind].address_destination);
 		
 		if(strcmp(opt, ")") != 0 && strstr(opt, "content") != NULL)
 		{
@@ -187,7 +187,7 @@ int main(int argc, char* argv[])
 	//printf("post_read_rules\n");
 
 	//ecoute de l'interface eht0 ; credits : devdungeon
-        char* device = "eth1";
+        char* device = "eth0";
         char error_buffer[PCAP_ERRBUF_SIZE];
         pcap_t* handle;
 

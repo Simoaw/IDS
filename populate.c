@@ -87,6 +87,14 @@ int populate_packet_ds(const struct pcap_pkthdr* header, const u_char* packet, E
                 {
 			strcpy(custom_frame->protocol, "udp"); //ajout
                         printf("\nUDP Handling\n");
+                        
+                        tcp = (struct sniff_tcp*)(packet + SIZE_ETHERNET + size_ip);
+                        TCP_Segment custom_segment;
+                        
+                        custom_segment.source_port = ntohs(tcp->th_sport);
+                        custom_segment.destination_port = ntohs(tcp->th_dport);
+                        custom_packet.data = custom_segment;
+                        custom_frame->data = custom_packet;
                 }
                 if((int)ip->ip_p==TCP_PROTOCOL)
                 {
@@ -118,7 +126,7 @@ int populate_packet_ds(const struct pcap_pkthdr* header, const u_char* packet, E
 			if(custom_segment.source_port == 80)
 			{
 				strcpy(custom_frame->protocol, "http"); //ajout	
-				print_payload(payload_length, payload);
+				//print_payload(payload_length, payload); //ajout
 			}
 
                 }
