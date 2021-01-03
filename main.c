@@ -35,7 +35,7 @@ void rule_matcher(Rule* rules_ds, ETHER_Frame* frame)
 			{
 				if(strcmp(rules_ds[i].direction,"->") == 0)
 				{
-					printf("rule:%s frame:%s\n", rules_ds[i].address_destination, frame->data.destination_ip);
+					//printf("rule:%s frame:%s\n", rules_ds[i].address_destination, frame->data.destination_ip);
 					if(strcmp(rules_ds[i].address_destination,"any") == 0||strcmp(rules_ds[i].address_destination,frame->data.destination_ip) == 0)
 					{
 						if(rules_ds[i].port_destination == 0||rules_ds[i].port_destination == frame->data.data.destination_port)
